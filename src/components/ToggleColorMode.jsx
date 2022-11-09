@@ -24,17 +24,6 @@ export default function ToggleColorMode() {
         palette: {
           mode,
         },
-        // components: {
-        //   MuiContainer: {
-        //     styleOverrides: {
-        //       root: ({ theme }) => ({
-        //         ...(theme.palette.mode === 'dark' && {
-        //           backgroundColor: '#001E3C',
-        //         }),
-        //       }),
-        //     },
-        //   },
-        // },
       }),
     [mode]
   );
