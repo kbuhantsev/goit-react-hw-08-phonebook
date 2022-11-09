@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import Box from 'components/Box';
 
 export default function UserMenu() {
@@ -5,7 +6,7 @@ export default function UserMenu() {
     <>
       <Box flexDirection="row" gridGap="20px">
         <p>mango@mail.com</p>
-        <button>Logout</button>
+        <Button variant="contained">Logout</Button>
       </Box>
     </>
   );
