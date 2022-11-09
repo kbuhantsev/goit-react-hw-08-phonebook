@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import ToggleColorMode from 'components/ToggleColorMode';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -14,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
-        <App />
+        <BrowserRouter basename="/goit-react-hw-07-phonebook">
+          <App />
+        </BrowserRouter>
       </Provider>
     </StyledEngineProvider>
   </React.StrictMode>
