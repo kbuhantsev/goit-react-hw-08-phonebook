@@ -9,8 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { StyledTableCell, StyledTableRow } from './ContactsTable.styled';
 //
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
+import { selectFilteredContacts } from 'redux/contacts/selectors';
+import { deleteContact } from 'redux/contacts/operations';
 
 function ContactsTable() {
   const dispatch = useDispatch();

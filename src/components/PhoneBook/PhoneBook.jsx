@@ -7,8 +7,8 @@ import { useTheme } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 //
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/operations';
-import { selectError, selectIsLoading } from 'redux/selectors';
+import { fetchContacts } from 'redux/contacts/operations';
+import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 
 export default function PhoneBook() {
   const theme = useTheme();
