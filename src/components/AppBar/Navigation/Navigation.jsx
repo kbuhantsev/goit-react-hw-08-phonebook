@@ -6,7 +6,17 @@ import { Button } from '@mui/material';
 export default function Navigation() {
   return (
     <Box as="nav" flexDirection="row" gridGap="20px">
-      <Button to="/" component={NavLink} variant="contained" end>
+      {/* Работает: */}
+      {/* <Button to="/" component={NavLink} variant="contained" end> */}
+      {/* Хочется: */}
+      <Button
+        to="/"
+        component={NavLink}
+        variant={({ isActive }) => (isActive ? 'contained' : 'text')}
+        end
+      >
+        {/* Даже так не работает: */}
+        {/* <Button to="/" component={NavLink} variant={() => 'contained'} end> */}
         Home
       </Button>
       <Button to="/phones" component={NavLink}>
