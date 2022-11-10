@@ -3,16 +3,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from '@mui/material';
-import Box from 'components/Box';
+import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { FormStyled } from './LoginForm.styled';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/user/operations';
@@ -25,6 +16,7 @@ const schema = Yup.object({
     .matches(emailRegExp, 'Name is not valid!')
     .required('This field is required!'),
   password: Yup.string()
+    .min(7, 'Minimum 7 symbols!')
     .max(30, 'Maximum 30 symbols!')
     .required('This field is required!'),
 }).required();
@@ -56,10 +48,6 @@ export default function LoginForm() {
     }
   }, [isSubmitSuccessful, reset]);
 
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -72,6 +60,7 @@ export default function LoginForm() {
   };
 
   const onFormSubmit = data => {
+    console.log(data);
     dispatch(logIn(data));
   };
 
@@ -80,7 +69,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Box>
+    <>
       <FormStyled onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="email"
@@ -97,33 +86,37 @@ export default function LoginForm() {
             />
           )}
         />
-        <FormControl>
-          <InputLabel htmlFor="password" size="small">
-            Password *
-          </InputLabel>
-          <OutlinedInput
-            id="password"
-            name="password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            label="Password"
-            size="small"
-            onChange={handleChange('password')}
-            error={errors.email && true}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Password"
+              variant="outlined"
+              size="small"
+              error={errors.password && true}
+              helperText={errors.password?.message}
+              type={values.showPassword ? 'text' : 'password'}
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
+        />
+
         <Button type="submit" variant="outlined">
           Login
         </Button>
@@ -140,6 +133,6 @@ export default function LoginForm() {
         pauseOnHover
         theme="colored"
       />
-    </Box>
+    </>
   );
 }
