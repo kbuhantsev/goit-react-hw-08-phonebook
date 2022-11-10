@@ -1,10 +1,14 @@
 import Box from 'components/Box';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from 'redux/user/selectors';
 import AuthNav from './AuthNav';
 import ColorMode from './ColorMode';
 import Navigation from './Navigation';
 import UserMenu from './UserMenu';
 
 export default function AppBar() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <Box
       as="header"
@@ -14,8 +18,7 @@ export default function AppBar() {
     >
       <Navigation />
       <ColorMode />
-      <AuthNav />
-      <UserMenu />
+      {isLoggedIn ? <UserMenu /> : <AuthNav />}
     </Box>
   );
 }
