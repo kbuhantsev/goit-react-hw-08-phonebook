@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from './AppBar';
 import { Outlet } from 'react-router-dom';
+import { GlobalStyle } from './GlobalStyle/GlobalStyle';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -35,6 +36,7 @@ export default function Layout() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <GlobalStyle />
         <Container>
           <AppBar />
           <Outlet />

@@ -3,11 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
 //
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import Phones from './pages/Phones';
-import Register from './pages/Register';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import NotFound from '../pages/NotFound';
+import Phones from '../pages/Phones';
+import Register from '../pages/Register';
 
 // const Home = lazy(() => import('./pages/Home'));
 // const NotFound = lazy(() => import('./pages/NotFound'));

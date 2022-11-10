@@ -6,7 +6,12 @@ import UserMenu from './UserMenu';
 
 export default function AppBar() {
   return (
-    <Box as="header" flexDirection="row" justifyContent="space-between">
+    <Box
+      as="header"
+      flexDirection="row"
+      justifyContent="space-between"
+      marginTop="10px"
+    >
       <Navigation />
       <ColorMode />
       <AuthNav />
