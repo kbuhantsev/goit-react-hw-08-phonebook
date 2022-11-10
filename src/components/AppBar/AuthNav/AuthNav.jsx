@@ -1,16 +1,16 @@
-import { Button } from '@mui/material';
 import Box from 'components/Box';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import NavButtonCustom from 'components/AppBar/NavButtonCustom';
 
 export default function AuthNav() {
   return (
     <Box as="nav" flexDirection="row" gridGap="20px">
-      <Button component={Link} to="register">
+      <NavButtonCustom component={NavLink} to="register">
         Register
-      </Button>
-      <Button component={Link} to="login">
+      </NavButtonCustom>
+      <NavButtonCustom component={NavLink} to="login">
         Login
-      </Button>
+      </NavButtonCustom>
     </Box>
   );
 }
