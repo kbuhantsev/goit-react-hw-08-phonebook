@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { FormStyled } from './RegisterForm.styled';
 import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/user/operations';
+import { register } from 'redux/user/operations';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const emailRegExp = '';
@@ -65,8 +65,7 @@ export default function LoginForm() {
   };
 
   const onFormSubmit = data => {
-    console.log(data);
-    dispatch(logIn(data));
+    dispatch(register(data));
   };
 
   const onFormError = error => {

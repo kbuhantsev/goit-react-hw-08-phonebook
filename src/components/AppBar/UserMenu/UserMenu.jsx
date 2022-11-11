@@ -19,12 +19,12 @@ export default function UserMenu() {
 
   return (
     <Box flexDirection="row" gridGap="20px" justifyContent="center">
-      <Box as="ul" flexDirection="row" gridGap="10px">
-        <Box as="ul" flexDirection="row" gridGap="5px">
+      <Box as="ul" flexDirection="row" gridGap="10px" alignItems="center">
+        <Box as="li" flexDirection="row" gridGap="5px">
           <AccountCircleIcon color="primary" />
           {name}
         </Box>
-        <Box as="ul" flexDirection="row" gridGap="5px">
+        <Box as="li" flexDirection="row" gridGap="5px">
           <EmailIcon color="primary" />
           {email}
         </Box>

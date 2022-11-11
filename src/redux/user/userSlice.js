@@ -8,39 +8,27 @@ const initialState = {
   isRefreshing: false,
 };
 
+const rejected = (state, _) => {
+  state.user = { name: null, email: null };
+  state.isLoggedIn = false;
+  state.token = null;
+};
+
+const fulfilled = (state, action) => {
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
+};
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    setLoggedIn(state, action) {
-      state.isLoggedIn = action.payload;
-    },
-  },
   extraReducers: {
-    [register.fulfilled](state, action) {
-      state.isLoggedIn = true;
-      state.token = action.payload.token;
-      state.user = action.payload.user;
-    },
-    [register.rejected](state) {
-      state.isLoggedIn = false;
-      state.token = null;
-    },
-    [logIn.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    },
-    [logIn.rejected](state) {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    },
-    [logOut.fulfilled](state) {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    },
+    [register.fulfilled]: fulfilled,
+    [register.rejected]: rejected,
+    [logIn.fulfilled]: fulfilled,
+    [logIn.rejected]: rejected,
+    [logOut.fulfilled]: rejected,
     [refreshUser.pending](state) {
       state.isRefreshing = true;
     },
@@ -56,5 +44,3 @@ const authSlice = createSlice({
 });
 
 export const authReduser = authSlice.reducer;
-//Отладка
-export const { setLoggedIn } = authSlice.actions;
