@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://goit-task-manager.herokuapp.com/';
-
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
+      console.log(axios.defaults.headers.common.Authorization);
       const response = await axios.get('/contacts');
       return response.data;
     } catch (e) {
@@ -19,6 +18,7 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
+      console.log(axios.defaults.headers.common.Authorization);
       const response = await axios.post('/contacts', contact);
       return response.data;
     } catch (e) {

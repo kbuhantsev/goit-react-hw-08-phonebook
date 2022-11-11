@@ -60,7 +60,6 @@ export default function LoginForm() {
   };
 
   const onFormSubmit = data => {
-    console.log(data);
     dispatch(logIn(data));
   };
 

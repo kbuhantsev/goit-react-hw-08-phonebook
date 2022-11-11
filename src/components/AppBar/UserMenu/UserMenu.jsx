@@ -3,11 +3,19 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import Box from 'components/Box';
 import { useUser } from 'hooks';
+import { useDispatch } from 'react-redux';
+import { logOut } from 'redux/user/operations';
 
 export default function UserMenu() {
   const {
     user: { name, email },
   } = useUser();
+
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(logOut());
+  };
 
   return (
     <Box flexDirection="row" gridGap="20px" justifyContent="center">
@@ -22,7 +30,9 @@ export default function UserMenu() {
         </Box>
       </Box>
 
-      <Button variant="contained">Logout</Button>
+      <Button variant="contained" onClick={logout}>
+        Logout
+      </Button>
     </Box>
   );
 }

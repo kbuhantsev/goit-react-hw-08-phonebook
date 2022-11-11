@@ -17,13 +17,10 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [register.pending](state, action) {
-      console.log(state);
-      console.log(action);
-    },
     [register.fulfilled](state, action) {
       state.isLoggedIn = true;
       state.token = action.payload.token;
+      state.user = action.payload.user;
     },
     [register.rejected](state) {
       state.isLoggedIn = false;
@@ -33,6 +30,11 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+    },
+    [logIn.rejected](state) {
+      state.user = { name: null, email: null };
+      state.token = null;
+      state.isLoggedIn = false;
     },
     [logOut.fulfilled](state) {
       state.user = { name: null, email: null };

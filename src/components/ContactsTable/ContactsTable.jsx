@@ -33,11 +33,11 @@ function ContactsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {contacts.map(({ id, name, phone }) => (
+          {contacts.map(({ id, name, number }) => (
             <StyledTableRow key={id}>
               <StyledTableCell scope="row">{id}</StyledTableCell>
               <StyledTableCell align="right">{name}</StyledTableCell>
-              <StyledTableCell align="right">{phone}</StyledTableCell>
+              <StyledTableCell align="right">{number}</StyledTableCell>
               <StyledTableCell align="right">
                 <Button
                   variant="outlined"

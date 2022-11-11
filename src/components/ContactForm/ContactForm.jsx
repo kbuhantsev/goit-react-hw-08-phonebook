@@ -24,7 +24,7 @@ const schema = Yup.object({
     .min(3, 'Minimum 3 letters!')
     .matches(nameReExp, 'Name is not valid!')
     .required('This field is required!'),
-  phone: Yup.string()
+  number: Yup.string()
     .matches(phoneRegExp, 'Phone number is not valid!')
     .max(13, 'Maximum 13 numbers!')
     .required('This field is required!'),
@@ -39,7 +39,7 @@ export default function ContactForm() {
   } = useForm({
     defaultValues: {
       name: '',
-      phone: '',
+      number: '',
     },
     resolver: yupResolver(schema),
   });
@@ -48,10 +48,10 @@ export default function ContactForm() {
   const contacts = useSelector(selectContacts);
 
   const onFormSubmit = data => {
-    const { name, phone } = data;
+    const { name, number } = data;
     const contact = {
       name,
-      phone,
+      number,
     };
     if (contacts.find(contact => contact.name === name)) {
       toast.warning(`${name} is already in contacts`, {});
@@ -89,7 +89,7 @@ export default function ContactForm() {
         />
 
         <Controller
-          name="phone"
+          name="number"
           control={control}
           render={({ field }) => (
             <TextField
@@ -97,8 +97,8 @@ export default function ContactForm() {
               label="Phone"
               variant="outlined"
               size="small"
-              error={errors.phone && true}
-              helperText={errors.phone?.message}
+              error={errors.number && true}
+              helperText={errors.number?.message}
             />
           )}
         />
