@@ -26,11 +26,17 @@ export default function PhoneBook() {
 
   return (
     <Box>
-      <Box as={'h1'} mb={'10px'} color={theme.palette.text.primary}>
+      <Box
+        as="h1"
+        pt="20px"
+        pb="10px"
+        margin="0 auto"
+        color={theme.palette.text.primary}
+      >
         Phonebook
       </Box>
       <ContactForm />
-      <Box as={'h2'} mb={'0px'} color={theme.palette.text.primary}>
+      <Box as="h2" mb="0" color={theme.palette.text.primary}>
         Contacts
       </Box>
       <Filter />

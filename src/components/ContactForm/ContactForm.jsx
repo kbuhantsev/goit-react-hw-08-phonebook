@@ -17,12 +17,10 @@ import { addContact } from 'redux/contacts/operations';
 
 const phoneRegExp =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
-const nameReExp = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
 
 const schema = Yup.object({
   name: Yup.string()
     .min(3, 'Minimum 3 letters!')
-    .matches(nameReExp, 'Name is not valid!')
     .required('This field is required!'),
   number: Yup.string()
     .matches(phoneRegExp, 'Phone number is not valid!')

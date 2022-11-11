@@ -1,5 +1,4 @@
-// import React, { Suspense } from 'react';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Container } from '@mui/system';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,9 +39,9 @@ export default function Layout() {
         <GlobalStyle />
         <Container>
           <AppBar />
-          {/* <Suspense> */}
-          <Outlet />
-          {/* </Suspense> */}
+          <Suspense fallback={<></>}>
+            <Outlet />
+          </Suspense>
         </Container>
       </ThemeProvider>
     </ColorModeContext.Provider>
