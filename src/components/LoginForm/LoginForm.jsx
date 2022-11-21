@@ -79,6 +79,7 @@ export default function LoginForm() {
               label="Email"
               variant="outlined"
               size="small"
+              type="email"
               error={errors.email && true}
               helperText={errors.email?.message}
               required
