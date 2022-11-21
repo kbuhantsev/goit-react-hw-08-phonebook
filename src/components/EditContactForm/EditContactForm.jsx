@@ -1,8 +1,6 @@
 import React from 'react';
-// import { customAlphabet } from 'nanoid';
 import * as Yup from 'yup';
 import { ButtonStyled, FormStyled } from './EditContactForm.styled';
-// import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import { TextField, Typography } from '@mui/material';
 //
@@ -67,7 +65,7 @@ export default function EditContactForm({ contact, setOpen }) {
 
   return (
     <>
-      <Typography variant="h4" align="center" gutterBottom>
+      <Typography variant="h5" align="center" gutterBottom>
         Edit contact
       </Typography>
       <FormStyled onSubmit={handleSubmit(onFormSubmit, onFormError)}>

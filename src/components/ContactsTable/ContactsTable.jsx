@@ -1,10 +1,11 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
+import { Paper, Button, Dialog, DialogContent } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { StyledTableCell, StyledTableRow } from './ContactsTable.styled';
@@ -14,7 +15,6 @@ import { selectFilteredContacts } from 'redux/contacts/selectors';
 import { deleteContact } from 'redux/contacts/operations';
 import Box from 'components/Box';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import EditContactForm from 'components/EditContactForm';
 
 function ContactsTable() {
@@ -74,9 +74,8 @@ function ContactsTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* /////////////////////////////////////// */}
+
       <Dialog open={open}>
-        <DialogTitle>Edit contact</DialogTitle>
         <DialogContent>
           <EditContactForm contact={contact} setOpen={setOpen} />
         </DialogContent>

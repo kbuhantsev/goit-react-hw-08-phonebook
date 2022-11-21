@@ -47,6 +47,10 @@ export const contactsSlice = createSlice({
     [editContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
+      let [contact] = state.items.filter(item => item.id === action.payload.id);
+      if (contact) {
+        Object.assign(contact, action.payload);
+      }
     },
     [editContact.rejected]: handleRejected,
   },
