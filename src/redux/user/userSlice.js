@@ -8,56 +8,44 @@ const initialState = {
   isRefreshing: false,
 };
 
-const rejected = state => {
+const rejectedReducer = state => {
   state.user = { name: null, email: null };
   state.isLoggedIn = false;
   state.token = null;
 };
 
-const fulfilled = (state, action) => {
+const fulfilledReducer = (state, action) => {
   state.user = action.payload.user;
   state.token = action.payload.token;
   state.isLoggedIn = true;
 };
 
-function isRejectedAction(action) {
-  return action.type.endsWith('rejected');
-}
+const refreshUserPendingReducer = state => {
+  state.isRefreshing = true;
+};
+
+const refreshUserFulfilledReducer = (state, action) => {
+  state.user = action.payload;
+  state.isLoggedIn = true;
+  state.isRefreshing = false;
+};
+
+const refreshUserRejectedReducer = state => {
+  state.isRefreshing = false;
+};
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(logIn.fulfilled, (state, action) => {
-        fulfilled(state, action);
-      })
-      .addCase(logOut.fulfilled, state => {
-        rejected(state);
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        fulfilled(state, action);
-      })
-      .addCase(register.rejected, state => {
-        rejected(state);
-      })
-      .addCase(refreshUser.pending, state => {
-        state.isRefreshing = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-      })
-      .addCase(refreshUser.rejected, state => {
-        state.isRefreshing = false;
-      })
-
-      .addMatcher(isRejectedAction, state => {
-        state.user = { name: null, email: null };
-        state.isLoggedIn = false;
-        state.token = null;
-      });
+      .addCase(logIn.fulfilled, fulfilledReducer)
+      .addCase(logOut.fulfilled, rejectedReducer)
+      .addCase(register.fulfilled, fulfilledReducer)
+      .addCase(register.rejected, rejectedReducer)
+      .addCase(refreshUser.pending, refreshUserPendingReducer)
+      .addCase(refreshUser.fulfilled, refreshUserFulfilledReducer)
+      .addCase(refreshUser.rejected, refreshUserRejectedReducer);
   },
 });
 
