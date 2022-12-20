@@ -20,7 +20,7 @@ const schema = Yup.object({
   name: Yup.string()
     .min(3, 'Minimum 3 letters!')
     .required('This field is required!'),
-  number: Yup.string()
+  phone: Yup.string()
     .matches(phoneRegExp, 'Phone number is not valid!')
     .max(13, 'Maximum 13 numbers!')
     .required('This field is required!'),
@@ -35,7 +35,7 @@ export default function EditContactForm({ contact, setOpen }) {
   } = useForm({
     defaultValues: {
       name: contact?.name,
-      number: contact?.number,
+      phone: contact?.phone,
     },
     resolver: yupResolver(schema),
   });
@@ -43,11 +43,11 @@ export default function EditContactForm({ contact, setOpen }) {
   const dispatch = useDispatch();
 
   const onFormSubmit = data => {
-    const { name, number } = data;
+    const { name, phone } = data;
     const editedContact = {
       id: contact.id,
       name,
-      number,
+      phone,
     };
     dispatch(editContact(editedContact));
     setOpen(false);
@@ -85,7 +85,7 @@ export default function EditContactForm({ contact, setOpen }) {
         />
 
         <Controller
-          name="number"
+          name="phone"
           control={control}
           render={({ field }) => (
             <TextField
@@ -93,8 +93,8 @@ export default function EditContactForm({ contact, setOpen }) {
               label="Phone"
               variant="outlined"
               size="small"
-              error={errors.number && true}
-              helperText={errors.number?.message}
+              error={errors.phone && true}
+              helperText={errors.phone?.message}
             />
           )}
         />

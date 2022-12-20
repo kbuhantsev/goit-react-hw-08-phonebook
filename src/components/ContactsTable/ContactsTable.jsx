@@ -46,17 +46,17 @@ function ContactsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {contacts.map(({ id, name, number }) => (
+            {contacts.map(({ id, name, phone }) => (
               <StyledTableRow key={id}>
                 <StyledTableCell scope="row">{id}</StyledTableCell>
                 <StyledTableCell align="right">{name}</StyledTableCell>
-                <StyledTableCell align="right">{number}</StyledTableCell>
+                <StyledTableCell align="right">{phone}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Box flexDirection="row" gridGap="5px">
                     <Button
                       variant="outlined"
                       startIcon={<EditIcon />}
-                      onClick={() => openContactForm({ id, name, number })}
+                      onClick={() => openContactForm({ id, name, phone })}
                     >
                       Edit
                     </Button>

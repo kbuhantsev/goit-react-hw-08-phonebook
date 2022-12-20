@@ -16,7 +16,7 @@ const schema = Yup.object({
     .matches(emailRegExp, 'Name is not valid!')
     .required('This field is required!'),
   password: Yup.string()
-    .min(7, 'Minimum 7 symbols!')
+    .min(5, 'Minimum 5 symbols!')
     .max(30, 'Maximum 30 symbols!')
     .required('This field is required!'),
 }).required();
