@@ -13,7 +13,7 @@ const emailRegExp = '';
 
 const schema = Yup.object({
   email: Yup.string()
-    .matches(emailRegExp, 'Name is not valid!')
+    .matches(emailRegExp, 'Email is not valid!')
     .required('This field is required!'),
   password: Yup.string()
     .min(5, 'Minimum 5 symbols!')
