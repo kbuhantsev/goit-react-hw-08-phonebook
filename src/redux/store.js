@@ -13,7 +13,6 @@ import { contactsReducer } from './contacts/contactsSlice';
 import { filterReducer } from './filter/filterSlice';
 import { authReduser } from './user/userSlice';
 import storage from 'redux-persist/lib/storage';
-// import axios from 'axios';
 
 const middleware = getDefaultMiddleware =>
   getDefaultMiddleware({

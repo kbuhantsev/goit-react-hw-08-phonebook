@@ -8,6 +8,8 @@ import { FormStyled } from './RegisterForm.styled';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/user/operations';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useUser } from 'hooks';
+import { useNavigate } from 'react-router-dom';
 
 const emailRegExp = '';
 
@@ -20,12 +22,12 @@ const schema = Yup.object({
     .matches(emailRegExp, 'Name is not valid!')
     .required('This field is required!'),
   password: Yup.string()
-    .min(7, 'Minimum 7 symbols!')
+    .min(5, 'Minimum 5 symbols!')
     .max(30, 'Maximum 30 symbols!')
     .required('This field is required!'),
 }).required();
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const {
     control,
     handleSubmit,
@@ -45,13 +47,22 @@ export default function LoginForm() {
     showPassword: false,
   });
 
+  const { isVerifying } = useUser();
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
     }
   }, [isSubmitSuccessful, reset]);
+
+  useEffect(() => {
+    if (isVerifying) {
+      navigate('/', { replace: true });
+    }
+  }, [isVerifying, navigate]);
 
   const handleClickShowPassword = () => {
     setValues({

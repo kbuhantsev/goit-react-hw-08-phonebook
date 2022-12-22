@@ -1,9 +1,11 @@
 import Box from 'components/Box';
 import { useTheme } from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useUser } from 'hooks';
 
 export default function Home() {
   const theme = useTheme();
+  const { isVerified } = useUser();
 
   return (
     <Box>
@@ -19,6 +21,7 @@ export default function Home() {
       >
         Phonebook home page
       </Box>
+      {isVerified === false ? <>Нужна верификация</> : <></>}
     </Box>
   );
 }
