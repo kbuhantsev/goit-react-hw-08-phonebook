@@ -8,7 +8,6 @@ import { FormStyled } from './RegisterForm.styled';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/user/operations';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useUser } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 
 const emailRegExp = '';
@@ -47,8 +46,6 @@ export default function RegisterForm() {
     showPassword: false,
   });
 
-  const { isVerifying } = useUser();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,12 +54,6 @@ export default function RegisterForm() {
       reset();
     }
   }, [isSubmitSuccessful, reset]);
-
-  useEffect(() => {
-    if (isVerifying) {
-      navigate('/', { replace: true });
-    }
-  }, [isVerifying, navigate]);
 
   const handleClickShowPassword = () => {
     setValues({
@@ -76,11 +67,24 @@ export default function RegisterForm() {
   };
 
   const onFormSubmit = data => {
-    dispatch(register(data));
+    const regPromice = dispatch(register(data));
+
+    regPromice
+      .then(response => {
+        const { error, payload } = response;
+        if (error) {
+          toast.error(`${error.message}, ${payload}`);
+          return;
+        }
+        navigate('/', { replace: true, state: payload });
+      })
+      .catch(error => {
+        toast.error(error.message);
+      });
   };
 
   const onFormError = error => {
-    toast.error(error);
+    toast.error(error.message);
   };
 
   return (

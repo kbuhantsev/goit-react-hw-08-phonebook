@@ -31,12 +31,6 @@ const rejectedReducer = state => {
   state.token = null;
 };
 
-// const fulfilledReducer = (state, action) => {
-//   state.user = action.payload.user;
-//   state.token = action.payload.token;
-//   state.isLoggedIn = true;
-// };
-
 const refreshUserPendingReducer = state => {
   state.isRefreshing = true;
 };

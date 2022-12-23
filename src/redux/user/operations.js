@@ -103,6 +103,8 @@ export const verify = createAsyncThunk(
         return thunkAPI.rejectWithValue(res.data);
       }
       setAuthHeader(res.data.token);
+      const state = thunkAPI.getState();
+      state.isVerified = true;
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
