@@ -8,6 +8,7 @@ import { FormStyled } from './LoginForm.styled';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/user/operations';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const emailRegExp = '';
 
@@ -41,6 +42,7 @@ export default function LoginForm() {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -60,7 +62,20 @@ export default function LoginForm() {
   };
 
   const onFormSubmit = data => {
-    dispatch(logIn(data));
+    const regPromice = dispatch(logIn(data));
+    regPromice
+      .then(response => {
+        const { error, payload } = response;
+        if (error) {
+          toast.error(`${error.message}, ${payload}`);
+          return;
+        }
+        navigate('/', { replace: true, state: payload });
+      })
+      .catch(error => {
+        toast.error(error.message);
+        return;
+      });
   };
 
   const onFormError = error => {

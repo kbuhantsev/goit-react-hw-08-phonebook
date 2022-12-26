@@ -9,7 +9,6 @@ import { Route, Routes } from 'react-router-dom';
 //
 import RestrictedRoute from './Routes/RestrictedRoute';
 import PrivateRoute from './Routes/PrivateRoute';
-import Verify from './Routes/Verify';
 //
 import { useDispatch } from 'react-redux';
 import { refreshUser } from 'redux/user/operations';
@@ -53,7 +52,7 @@ export default function App() {
           path="phones"
           element={<PrivateRoute redirectTo="/login" component={<Phones />} />}
         />
-        <Route path="verify/:token" element={<Verify />} />
+
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

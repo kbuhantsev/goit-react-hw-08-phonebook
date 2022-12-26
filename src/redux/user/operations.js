@@ -22,6 +22,7 @@ export const register = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const res = await axios.post('/users/signup', credentials);
+      setAuthHeader(res.data.token);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data?.message);
@@ -87,24 +88,6 @@ export const refreshUser = createAsyncThunk(
       // If there is a token, add it to the HTTP header and perform the request
       setAuthHeader(persistedToken);
       const res = await axios.get('users/current');
-      return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message);
-    }
-  }
-);
-
-export const verify = createAsyncThunk(
-  'auth/verify',
-  async (credentials, thunkAPI) => {
-    try {
-      const res = await axios.get('users/verify/' + credentials.token);
-      if (res.status !== 200) {
-        return thunkAPI.rejectWithValue(res.data);
-      }
-      setAuthHeader(res.data.token);
-      const state = thunkAPI.getState();
-      state.isVerified = true;
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data?.message);
