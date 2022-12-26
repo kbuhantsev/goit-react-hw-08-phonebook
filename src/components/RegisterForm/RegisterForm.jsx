@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,8 +30,7 @@ export default function RegisterForm() {
   const {
     control,
     handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       name: '',
@@ -48,12 +47,6 @@ export default function RegisterForm() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  }, [isSubmitSuccessful, reset]);
 
   const handleClickShowPassword = () => {
     setValues({
@@ -80,6 +73,7 @@ export default function RegisterForm() {
       })
       .catch(error => {
         toast.error(error.message);
+        return;
       });
   };
 
