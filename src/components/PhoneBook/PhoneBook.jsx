@@ -7,21 +7,16 @@ import { useTheme } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 //
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/contacts/operations';
-import { selectError, selectIsLoading } from 'redux/contacts/selectors';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 
 export default function PhoneBook() {
   const theme = useTheme();
 
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     if (!isLoggedIn) return;
-    dispatch(fetchContacts());
   }, [dispatch, isLoggedIn]);
 
   return (
@@ -40,7 +35,6 @@ export default function PhoneBook() {
         Contacts
       </Box>
       <Filter />
-      {isLoading && !error && <b>Request in progress...</b>}
       <ContactsTable />
 
       <ToastContainer position="top-right" autoClose={2000} theme="colored" />

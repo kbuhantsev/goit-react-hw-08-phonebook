@@ -10,22 +10,23 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { StyledTableCell, StyledTableRow } from './ContactsTable.styled';
 //
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/contacts/selectors';
-import { deleteContact } from 'redux/contacts/operations';
 import Box from 'components/Box';
 import { useState } from 'react';
 import EditContactForm from 'components/EditContactForm';
+import {
+  useGetContactsQuery,
+  useDeleteContactMutation,
+} from 'redux/services/contactsApi';
 
 function ContactsTable() {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [contact, setContact] = useState(null);
 
-  const contacts = useSelector(selectFilteredContacts);
+  const { data: contacts = [], error, isLoading } = useGetContactsQuery();
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
 
   const onDelete = ({ id }) => {
-    dispatch(deleteContact(id));
+    deleteContact(id);
   };
 
   const openContactForm = contact => {
@@ -35,6 +36,7 @@ function ContactsTable() {
 
   return (
     <>
+      {isLoading && !error && <b>Request in progress...</b>}
       <TableContainer component={Paper} sx={{ maxWidth: '900px' }}>
         <Table aria-label="contacts table">
           <TableHead>
@@ -63,6 +65,7 @@ function ContactsTable() {
                     <Button
                       variant="outlined"
                       startIcon={<DeleteIcon />}
+                      disabled={isDeleting}
                       onClick={() => onDelete({ id })}
                     >
                       Delete

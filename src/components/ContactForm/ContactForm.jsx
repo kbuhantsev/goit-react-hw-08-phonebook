@@ -1,5 +1,4 @@
 import React from 'react';
-// import { customAlphabet } from 'nanoid';
 import * as Yup from 'yup';
 import { ButtonStyled, FormStyled } from './ContactForm.styled';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,11 +8,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ToastContainer, toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-
-//
-import { selectContacts } from 'redux/contacts/selectors';
-import { addContact } from 'redux/contacts/operations';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'redux/services/contactsApi';
 
 const phoneRegExp =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
@@ -42,10 +40,10 @@ export default function ContactForm() {
     resolver: yupResolver(schema),
   });
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const { data: contacts = [] } = useGetContactsQuery();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
-  const onFormSubmit = data => {
+  const onFormSubmit = async data => {
     const { name, phone } = data;
     const contact = {
       name,
@@ -55,7 +53,7 @@ export default function ContactForm() {
       toast.warning(`${name} is already in contacts`, {});
       return;
     }
-    dispatch(addContact(contact));
+    await addContact(contact);
   };
 
   const onFormError = error => {
@@ -65,6 +63,7 @@ export default function ContactForm() {
   React.useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
+      toast.success('Contact created');
     }
   }, [isSubmitSuccessful, reset]);
 
@@ -101,7 +100,12 @@ export default function ContactForm() {
           )}
         />
 
-        <ButtonStyled type="submit" variant="outlined" startIcon={<AddIcon />}>
+        <ButtonStyled
+          type="submit"
+          variant="outlined"
+          startIcon={<AddIcon />}
+          disabled={isLoading}
+        >
           Add contact
         </ButtonStyled>
       </FormStyled>
