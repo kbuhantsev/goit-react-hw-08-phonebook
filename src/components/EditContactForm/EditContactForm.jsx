@@ -8,10 +8,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ToastContainer, toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-
-import { editContact } from 'redux/contacts/operations';
 import Box from 'components/Box';
+import { useEditContactMutation } from 'redux/services/contactsApi';
 
 const phoneRegExp =
   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
@@ -40,16 +38,16 @@ export default function EditContactForm({ contact, setOpen }) {
     resolver: yupResolver(schema),
   });
 
-  const dispatch = useDispatch();
+  const [editContact] = useEditContactMutation();
 
-  const onFormSubmit = data => {
+  const onFormSubmit = async data => {
     const { name, phone } = data;
     const editedContact = {
       id: contact.id,
       name,
       phone,
     };
-    dispatch(editContact(editedContact));
+    await editContact(editedContact);
     setOpen(false);
   };
 
