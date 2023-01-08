@@ -17,6 +17,8 @@ import {
   useGetContactsQuery,
   useDeleteContactMutation,
 } from 'redux/services/contactsApi';
+import { useSelector } from 'react-redux';
+import { selectFilter } from 'redux/contacts/selectors';
 
 function ContactsTable() {
   const [open, setOpen] = useState(false);
@@ -24,6 +26,15 @@ function ContactsTable() {
 
   const { data: contacts = [], error, isLoading } = useGetContactsQuery();
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+
+  let filteredContacts = contacts;
+
+  const filter = useSelector(selectFilter);
+  if (filter) {
+    filteredContacts = contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
 
   const onDelete = ({ id }) => {
     deleteContact(id);
@@ -48,7 +59,7 @@ function ContactsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {contacts.map(({ id, name, phone }) => (
+            {filteredContacts.map(({ id, name, phone }) => (
               <StyledTableRow key={id}>
                 <StyledTableCell scope="row">{id}</StyledTableCell>
                 <StyledTableCell align="right">{name}</StyledTableCell>
