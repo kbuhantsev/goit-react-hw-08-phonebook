@@ -17,9 +17,7 @@ jobs:
           npm install
           npm run lint:js
           npm run build
-        # env:
-        #   REACT_APP_API_URL: https://contacts-api.glitch.me/api/
-
+        
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
