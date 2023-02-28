@@ -35,7 +35,7 @@
     "web-vitals": "^2.1.3",
     "yup": "^0.32.11"
   },
-  "proxy": "https://node-js-rest-1kpxatg2b-kbuhantsev.vercel.app/api",
+  "proxy": "https://node-js-rest-api-kbuhantsev.vercel.app/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
