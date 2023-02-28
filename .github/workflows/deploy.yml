@@ -17,7 +17,9 @@ jobs:
           npm install
           npm run lint:js
           npm run build
-        
+        env:
+          REACT_APP_API_URL: https://node-js-rest-1kpxatg2b-kbuhantsev.vercel.app/api
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
