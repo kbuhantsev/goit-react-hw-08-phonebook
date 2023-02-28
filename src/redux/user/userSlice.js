@@ -8,10 +8,10 @@ const initialState = {
   isRefreshing: false,
 };
 
-const registerFulfilledReducer = state => {
-  state.user = { name: null, email: null };
-  state.isLoggedIn = false;
-  state.token = null;
+const registerFulfilledReducer = (state, action) => {
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
 };
 
 const logInFulfilledReducer = (state, action) => {

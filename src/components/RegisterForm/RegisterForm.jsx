@@ -1,9 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
-import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
 import { FormStyled } from './RegisterForm.styled';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/user/operations';
@@ -45,6 +52,8 @@ export default function RegisterForm() {
     showPassword: false,
   });
 
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,23 +68,19 @@ export default function RegisterForm() {
     event.preventDefault();
   };
 
-  const onFormSubmit = data => {
-    const regPromice = dispatch(register(data));
-
-    regPromice
-      .then(response => {
-        const { error, payload } = response;
-        if (error) {
-          toast.error(`${error.message}, ${payload}`);
-          return;
-        }
-        navigate('/', { replace: true, state: payload });
-      })
-      .catch(error => {
-        toast.error(error.message);
+  const onFormSubmit = useCallback(
+    async data => {
+      setOpen(true);
+      const { error, payload } = await dispatch(register(data));
+      if (error) {
+        toast.error(payload);
+        setOpen(false);
         return;
-      });
-  };
+      }
+      navigate('/phones', { replace: true, state: payload });
+    },
+    [dispatch, navigate]
+  );
 
   const onFormError = error => {
     toast.error(error.message);
@@ -83,6 +88,17 @@ export default function RegisterForm() {
 
   return (
     <>
+      {open && (
+        <Backdrop
+          sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={() => {
+            setOpen(false);
+          }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       <FormStyled onSubmit={handleSubmit(onFormSubmit, onFormError)}>
         <Controller
           name="name"
